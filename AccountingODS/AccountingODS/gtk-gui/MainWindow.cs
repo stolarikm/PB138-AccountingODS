@@ -3,7 +3,11 @@
 
 public partial class MainWindow
 {
-	private global::Gtk.Alignment alignment1;
+	private global::Gtk.HBox hbox1;
+
+	private global::Gtk.ScrolledWindow scrolledwindow6;
+
+	private global::Gtk.NodeView nodeview;
 
 	protected virtual void Build()
 	{
@@ -12,16 +16,30 @@ public partial class MainWindow
 		this.Name = "MainWindow";
 		this.Title = global::Mono.Unix.Catalog.GetString("MainWindow");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
-		this.BorderWidth = ((uint)(3));
+		this.BorderWidth = ((uint)(6));
 		// Container child MainWindow.Gtk.Container+ContainerChild
-		this.alignment1 = new global::Gtk.Alignment(0.5F, 0.5F, 1F, 1F);
-		this.alignment1.Name = "alignment1";
-		this.Add(this.alignment1);
+		this.hbox1 = new global::Gtk.HBox();
+		this.hbox1.Name = "hbox1";
+		this.hbox1.Spacing = 6;
+		// Container child hbox1.Gtk.Box+BoxChild
+		this.scrolledwindow6 = new global::Gtk.ScrolledWindow();
+		this.scrolledwindow6.CanFocus = true;
+		this.scrolledwindow6.Name = "scrolledwindow6";
+		this.scrolledwindow6.ShadowType = ((global::Gtk.ShadowType)(1));
+		// Container child scrolledwindow6.Gtk.Container+ContainerChild
+		this.nodeview = new global::Gtk.NodeView();
+		this.nodeview.CanFocus = true;
+		this.nodeview.Name = "nodeview";
+		this.scrolledwindow6.Add(this.nodeview);
+		this.hbox1.Add(this.scrolledwindow6);
+		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.scrolledwindow6]));
+		w2.Position = 2;
+		this.Add(this.hbox1);
 		if ((this.Child != null))
 		{
 			this.Child.ShowAll();
 		}
-		this.DefaultWidth = 1276;
+		this.DefaultWidth = 1171;
 		this.DefaultHeight = 746;
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
