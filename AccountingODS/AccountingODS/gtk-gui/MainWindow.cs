@@ -3,6 +3,8 @@
 
 public partial class MainWindow
 {
+	private global::Gtk.Alignment alignment1;
+
 	protected virtual void Build()
 	{
 		global::Stetic.Gui.Initialize(this);
@@ -10,12 +12,17 @@ public partial class MainWindow
 		this.Name = "MainWindow";
 		this.Title = global::Mono.Unix.Catalog.GetString("MainWindow");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+		this.BorderWidth = ((uint)(3));
+		// Container child MainWindow.Gtk.Container+ContainerChild
+		this.alignment1 = new global::Gtk.Alignment(0.5F, 0.5F, 1F, 1F);
+		this.alignment1.Name = "alignment1";
+		this.Add(this.alignment1);
 		if ((this.Child != null))
 		{
 			this.Child.ShowAll();
 		}
-		this.DefaultWidth = 400;
-		this.DefaultHeight = 300;
+		this.DefaultWidth = 1276;
+		this.DefaultHeight = 746;
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 	}
