@@ -1,0 +1,6 @@
+/home/ja/Projects/AccountingODS/AccountingODS/bin/Debug/AccountingODS.exe
+/home/ja/Projects/AccountingODS/AccountingODS/bin/Debug/AccountingODS.pdb
+/home/ja/Projects/AccountingODS/AccountingODS/obj/x86/Debug/AccountingODS.csprojResolveAssemblyReference.cache
+/home/ja/Projects/AccountingODS/AccountingODS/obj/x86/Debug/AccountingODS.csproj.CoreCompileInputs.cache
+/home/ja/Projects/AccountingODS/AccountingODS/obj/x86/Debug/AccountingODS.exe
+/home/ja/Projects/AccountingODS/AccountingODS/obj/x86/Debug/AccountingODS.pdb
