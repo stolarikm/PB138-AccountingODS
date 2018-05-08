@@ -1,5 +1,7 @@
 # Accounting#ODS: Evidence příjmů a výdajů
 
+https://stolarikm.github.io/PB138-AccountingODS/
+
 Projekt k predmetu PB138  
 Masarykova Univerzita, Brno  
 Fakulta informatiky
