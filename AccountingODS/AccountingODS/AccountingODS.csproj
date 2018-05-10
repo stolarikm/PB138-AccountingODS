@@ -57,6 +57,10 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Data" />
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Linq" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
@@ -73,8 +77,9 @@
     <Compile Include="Data\Person.cs" />
     <Compile Include="Data\InvoiceItem.cs" />
     <Compile Include="Data\InvoiceType.cs" />
-    <Compile Include="Serialization\ODSSerializer.cs" />
+    <Compile Include="Serialization\OdsWrapper.cs" />
     <Compile Include="Serialization\Paths.cs" />
+    <Compile Include="Serialization\PdfExporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
