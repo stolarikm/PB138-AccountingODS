@@ -12,8 +12,18 @@ namespace AccountingODS.Data
 			Creditor = creditor;
 			InvoiceDate = invoiceDate;
 			MaturityDate = maturityDate;
-			InvoicedItems = invoicedItems;
+			InvoicedItems = new List<InvoiceItem>(invoicedItems);
 		}
+
+		public Invoice(InvoiceType type, Person debtor, Person creditor, DateTime invoiceDate, DateTime maturityDate)
+        {
+            Type = type;
+            Debtor = debtor;
+            Creditor = creditor;
+            InvoiceDate = invoiceDate;
+            MaturityDate = maturityDate;
+			InvoicedItems = new List<InvoiceItem>();
+        }
 
 		public InvoiceType Type { get; }
 		public Person Debtor { get; }
