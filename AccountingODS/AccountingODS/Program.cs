@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
+using AccountingODS.Serialization;
 using Gtk;
+
 
 namespace AccountingODS
 {
@@ -12,6 +16,12 @@ namespace AccountingODS
 			win.Title = "AccountingODS";
             win.Show();
             Application.Run();
+
+            /*
+            var serializer = new ODSSerializer();
+            serializer.ExctractXmlFromODS(Paths.InputFolderPath + "odsToExtract.ods", Paths.OutputFolderPath);
+            serializer.InsertXmlToODS(Paths.InputFolderPath, Paths.OutputFolderPath);
+            */
         }
     }
 }
