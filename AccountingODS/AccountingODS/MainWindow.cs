@@ -7,6 +7,8 @@ using System.Linq;
 
 public partial class MainWindow : Window
 {
+	private NodeView lastNodeFocused;
+
 	public MainWindow() : base(WindowType.Toplevel)
     {
 		Build();
@@ -51,7 +53,7 @@ public partial class MainWindow : Window
 	[TreeNode(ListOnly = true)]
 	private class InvoiceNode : TreeNode
 	{
-		Invoice Invoice;
+		public Invoice Invoice;
 
 		public InvoiceNode(Invoice invoice)
 		{
@@ -81,7 +83,6 @@ public partial class MainWindow : Window
 
 	protected void OnButtonAddInvoiceClicked(object sender, EventArgs e)
 	{
-		//var test = nodeviewDebt.NodeSelection.SelectedNode as InvoiceNode;
 		var debtor = new Person(entryDebtorName.Text, entryDebtorAdress.Text, entryDebtorZip.Text);
 		var creditor = new Person(entryCreditorName.Text, entryCreditorAdress.Text, entryCreditorZip.Text);
 		Enum.TryParse(comboboxType.ActiveText, out InvoiceType type);
@@ -97,5 +98,55 @@ public partial class MainWindow : Window
 		}
 		//TODO: add new invoice to ods
 
+		entryDebtorName.Text = String.Empty;
+		entryDebtorAdress.Text = String.Empty;
+		entryDebtorZip.Text = String.Empty;
+		entryCreditorName.Text = String.Empty;
+		entryCreditorAdress.Text = String.Empty;
+		entryCreditorZip.Text = String.Empty;
+		calendarInvoiceDate.Date = DateTime.Today;
+		calendarMaturityDate.Date = DateTime.Today;
+	}
+
+	protected void OnButtonAddInvoiceItemClicked(object sender, EventArgs e)
+	{
+		if (decimal.TryParse(entryInvoiceItemCost.Text, out decimal cost)) {
+			var item = new InvoiceItem(cost, entryInvoiceItemName.Text);
+			(lastNodeFocused.NodeSelection.SelectedNode as InvoiceNode)?.Invoice.InvoicedItems.Add(item);
+			lastNodeFocused.IsFocus = true;
+			//TODO: add new item to ods
+
+			entryInvoiceItemCost.Text = String.Empty;
+			entryInvoiceItemName.Text = String.Empty;
+		}
+		else {
+			var color = new Gdk.Color();
+            Gdk.Color.Parse("red", ref color);
+			entryInvoiceItemCost.ModifyBase(StateType.Normal, color);
+		}
+	}
+
+	protected void OnButtonDeleteInvoiceClicked(object sender, EventArgs e)
+	{
+		if (lastNodeFocused == null) return;
+		var invoice = lastNodeFocused.NodeSelection.SelectedNode as InvoiceNode;
+		if (invoice != null) {
+			lastNodeFocused.NodeStore.RemoveNode(invoice);
+			//TODO: remove invoice from ods
+        }
+	}
+
+	protected void OnSetFocus(object o, SetFocusArgs args)
+	{
+		if (args.Focus is NodeView) {
+			lastNodeFocused = args.Focus as NodeView;
+		}
+	}
+
+    protected void OnEntryInvoiceItemCostChanged(object sender, EventArgs e)
+    {
+		var color = new Gdk.Color();
+		Gdk.Color.Parse("white", ref color);
+		entryInvoiceItemCost.ModifyBase(StateType.Normal, color);
 	}
 }
