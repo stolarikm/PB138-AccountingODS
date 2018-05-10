@@ -75,6 +75,8 @@
     <Compile Include="Data\InvoiceType.cs" />
     <Compile Include="Serialization\ODSSerializer.cs" />
     <Compile Include="Serialization\Paths.cs" />
+    <Compile Include="Window.cs" />
+    <Compile Include="gtk-gui\AccountingODS.Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
