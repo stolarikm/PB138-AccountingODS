@@ -12,7 +12,7 @@ Peter Holodňák
 Michal Stolárik
 
 ## Rozdelenie úloh
-Michal Stolárik - Ukladanie a načítavanie XML dokumentov z ODS, export dát do PDF
+Michal Stolárik - Ukladanie a načítavanie XML dokumentov z ODS, export dát do PDF 
 Martin Balucha - Evidencia príjmov/výdajov, serializácia dát do XML dokumentu  
 Peter Holodňák - Spracovanie dát, grafické uživateľské rozhranie
 
