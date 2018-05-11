@@ -5,8 +5,9 @@ namespace AccountingODS.Data
 {
 	public class Invoice
 	{
-		public Invoice(InvoiceType type, Person debtor, Person creditor, DateTime invoiceDate, DateTime maturityDate, List<InvoiceItem> invoicedItems)
+		public Invoice(string invoiceNumber, InvoiceType type, Person debtor, Person creditor, DateTime invoiceDate, DateTime maturityDate, List<InvoiceItem> invoicedItems)
 		{
+			InvoiceNumber = invoiceNumber;
 			Type = type;
 			Debtor = debtor;
 			Creditor = creditor;
@@ -15,8 +16,9 @@ namespace AccountingODS.Data
 			InvoicedItems = new List<InvoiceItem>(invoicedItems);
 		}
 
-		public Invoice(InvoiceType type, Person debtor, Person creditor, DateTime invoiceDate, DateTime maturityDate)
+		public Invoice(string invoiceNumber, InvoiceType type, Person debtor, Person creditor, DateTime invoiceDate, DateTime maturityDate)
         {
+			InvoiceNumber = invoiceNumber;
             Type = type;
             Debtor = debtor;
             Creditor = creditor;
@@ -25,6 +27,7 @@ namespace AccountingODS.Data
 			InvoicedItems = new List<InvoiceItem>();
         }
 
+		public string InvoiceNumber { get; }
 		public InvoiceType Type { get; }
 		public Person Debtor { get; }
 		public Person Creditor { get; }

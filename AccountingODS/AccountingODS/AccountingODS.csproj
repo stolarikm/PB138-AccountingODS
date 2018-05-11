@@ -80,6 +80,8 @@
     <Compile Include="Serialization\OdsWrapper.cs" />
     <Compile Include="Serialization\Paths.cs" />
     <Compile Include="Serialization\PdfExporter.cs" />
+    <Compile Include="InvoiceDetailDialog.cs" />
+    <Compile Include="gtk-gui\AccountingODS.InvoiceDetailDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

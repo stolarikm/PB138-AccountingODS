@@ -4,6 +4,7 @@ using System.Reflection;
 using AccountingODS.Data;
 using Gtk;
 using System.Linq;
+using AccountingODS;
 
 public partial class MainWindow : Window
 {
@@ -15,13 +16,13 @@ public partial class MainWindow : Window
 
 		//TODO: get invoices from ods
 		List<Invoice> credits = new List<Invoice>{
-			new Invoice(InvoiceType.CREDIT
+			new Invoice("12", InvoiceType.CREDIT
 							  , new Person("name", "adress", "code"), new Person("name2", "adress2", "code2")
 							  , DateTime.Now, DateTime.Now
 							  , new List<InvoiceItem> { new InvoiceItem(1.0m, "type"), new InvoiceItem(10.0m, "item") })
 		};
 		List<Invoice> debts = new List<Invoice> {
-			new Invoice(InvoiceType.DEBT
+			new Invoice("123", InvoiceType.DEBT
                               , new Person("name", "adress", "code"), new Person("name2", "adress2", "code2")
                               , DateTime.Now, DateTime.Now
                               , new List<InvoiceItem> { new InvoiceItem(1.0m, "type"), new InvoiceItem(10.0m, "item") })
@@ -45,9 +46,10 @@ public partial class MainWindow : Window
 		foreach (var invoice in invoices) {
 			nodeView.NodeStore.AddNode(new InvoiceNode(invoice));	
 		}
-		nodeView.AppendColumn("Invoice date", new CellRendererText(), "text", 0);
-		nodeView.AppendColumn("Maturity date", new CellRendererText(), "text", 1);
-		nodeView.AppendColumn("Total price", new CellRendererText(), "text", 2);
+		nodeView.AppendColumn("Invoice number", new CellRendererText(), "text", 0);
+		nodeView.AppendColumn("Invoice date", new CellRendererText(), "text", 1);
+		nodeView.AppendColumn("Maturity date", new CellRendererText(), "text", 2);
+		nodeView.AppendColumn("Total price", new CellRendererText(), "text", 3);
 	}
 
 	[TreeNode(ListOnly = true)]
@@ -61,17 +63,21 @@ public partial class MainWindow : Window
 		}
 
 		[TreeNodeValue(Column = 0)]
-		public string InvoiceDate { get { return Invoice.InvoiceDate.ToString("dd.MM.yyyy"); }}
+		public string InvoiceNumber { get { return Invoice.InvoiceNumber; }}
 
-		[TreeNodeValue(Column = 1)]
-		public string MaturityDate { get { return Invoice.MaturityDate.ToString("dd.MM.yyyy"); }}
+        [TreeNodeValue(Column = 1)]
+        public string InvoiceDate { get { return Invoice.InvoiceDate.ToString("dd.MM.yyyy"); }}
 
-		[TreeNodeValue(Column = 2)]
-		public string Cost {
-			get {
-				return Invoice.InvoicedItems.Count == 0 ? "0" : Invoice.InvoicedItems.Sum(x => x.Cost).ToString("G");
-			}
-		}
+        [TreeNodeValue(Column = 2)]
+        public string MaturityDate { get { return Invoice.MaturityDate.ToString("dd.MM.yyyy"); }}
+
+        [TreeNodeValue(Column = 3)]
+        public string Cost {
+            get {
+                return Invoice.InvoicedItems.Count == 0 ? "0" : Invoice.InvoicedItems.Sum(x => x.Cost).ToString("G");
+            }
+        }
+
 
 	}
 
@@ -86,7 +92,7 @@ public partial class MainWindow : Window
 		var debtor = new Person(entryDebtorName.Text, entryDebtorAdress.Text, entryDebtorZip.Text);
 		var creditor = new Person(entryCreditorName.Text, entryCreditorAdress.Text, entryCreditorZip.Text);
 		Enum.TryParse(comboboxType.ActiveText, out InvoiceType type);
-		var invoice = new Invoice(type, debtor, creditor, calendarInvoiceDate.Date, calendarMaturityDate.Date);
+		var invoice = new Invoice(entryInvoiceNumber.Text, type, debtor, creditor, calendarInvoiceDate.Date, calendarMaturityDate.Date);
 
 		switch(type) {
 			case InvoiceType.CREDIT:
@@ -98,6 +104,7 @@ public partial class MainWindow : Window
 		}
 		//TODO: add new invoice to ods
 
+		entryInvoiceNumber.Text = String.Empty;
 		entryDebtorName.Text = String.Empty;
 		entryDebtorAdress.Text = String.Empty;
 		entryDebtorZip.Text = String.Empty;
@@ -110,9 +117,11 @@ public partial class MainWindow : Window
 
 	protected void OnButtonAddInvoiceItemClicked(object sender, EventArgs e)
 	{
+		if (lastNodeFocused == null) return;
+
 		if (decimal.TryParse(entryInvoiceItemCost.Text, out decimal cost)) {
 			var item = new InvoiceItem(cost, entryInvoiceItemName.Text);
-			(lastNodeFocused.NodeSelection.SelectedNode as InvoiceNode)?.Invoice.InvoicedItems.Add(item);
+			(lastNodeFocused.NodeSelection?.SelectedNode as InvoiceNode)?.Invoice.InvoicedItems.Add(item);
 			lastNodeFocused.IsFocus = true;
 			//TODO: add new item to ods
 
@@ -148,5 +157,17 @@ public partial class MainWindow : Window
 		var color = new Gdk.Color();
 		Gdk.Color.Parse("white", ref color);
 		entryInvoiceItemCost.ModifyBase(StateType.Normal, color);
+	}
+
+	protected void OnButtonShowInvoiceDetailClicked(object sender, EventArgs e)
+	{
+		if (lastNodeFocused == null) return;
+
+		var invoice = lastNodeFocused.NodeSelection.SelectedNode as InvoiceNode;
+
+		if (invoice == null) return;
+
+		new InvoiceDetailDialog(invoice.Invoice).Run();
+        
 	}
 }
