@@ -65,6 +65,7 @@ namespace AccountingODS.Serialization
 
         private void ProcessInvoice(Invoice invoice)
         {
+            document.Add(CreateSingleLine("Invoice number", invoice.InvoiceNumber));
             document.Add(CreateSingleLine("Invoice type", invoice.Type.ToString()));
             document.Add(CreateSingleLine("Invoice date", invoice.InvoiceDate.ToString()));
             document.Add(CreateSingleLine("Maturity date", invoice.MaturityDate.ToString()));
