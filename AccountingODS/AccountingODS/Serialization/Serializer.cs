@@ -26,6 +26,8 @@ namespace AccountingODS.Serialization
 
         public void Serialize()
         {
+            var wrapper = new OdsWrapper();
+            wrapper.ExctractXmlFromODS(Paths.InputFolderPath + Path.DirectorySeparatorChar + "template.ods", Paths.InputFolderPath + Path.DirectorySeparatorChar);
             XDocument doc = XDocument.Load(Paths.InputFolderPath + Path.DirectorySeparatorChar + "content.xml");
             var root = doc.Root;
 
@@ -43,9 +45,8 @@ namespace AccountingODS.Serialization
             {
                 SerializeInvoice(Invoices.ElementAt(i), tables.ElementAt(i));
             }
-            doc.Save(Paths.OutputFolderPath + "content.xml");
-            var wrapper = new OdsWrapper();
-            wrapper.InsertXmlToODS(Paths.OutputFolderPath, Paths.OutputFolderPath + "result.ods");
+            doc.Save(Paths.InputFolderPath + "content.xml");
+            wrapper.InsertXmlToODS(Paths.InputFolderPath, Paths.OutputFolderPath + "result.ods");
         }
 
 

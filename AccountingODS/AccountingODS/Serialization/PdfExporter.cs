@@ -23,6 +23,9 @@ namespace AccountingODS.Serialization
         /// <param name="pathToPdf">Path to pdf.</param>
         public void Export(IList<Invoice> invoices, string pathToPdf) 
         {
+            if (invoices.Count == 0) {
+                return;
+            }
             Initialize(pathToPdf);
             ProcessList(invoices);
             document.Close();
@@ -65,13 +68,14 @@ namespace AccountingODS.Serialization
 
         private void ProcessInvoice(Invoice invoice)
         {
+            document.Add(CreateSingleLine("Invoice number", invoice.InvoiceNumber));
             document.Add(CreateSingleLine("Invoice type", invoice.Type.ToString()));
             document.Add(CreateSingleLine("Invoice date", invoice.InvoiceDate.ToString()));
             document.Add(CreateSingleLine("Maturity date", invoice.MaturityDate.ToString()));
 
             AddRangeToDocument(CreateMultiLine("Creditor", GetPersonInfo(invoice.Creditor)));
             AddRangeToDocument(CreateMultiLine("Debtor", GetPersonInfo(invoice.Debtor)));
-            AddRangeToDocument(CreateMultiLine("Items", invoice.InvoicedItems.Select(i => CreateSingleLine(i.Name, i.Cost.ToString(), 145)).ToArray()));
+            AddRangeToDocument(CreateMultiLine("Items", invoice.InvoicedItems.Select(i => CreateSingleLine(i.Name, i.Cost.ToString() + " CZK", 145)).ToArray()));
 
             document.Add(new Paragraph(HorizontalRow()));
             document.Add(new Paragraph(Environment.NewLine));
