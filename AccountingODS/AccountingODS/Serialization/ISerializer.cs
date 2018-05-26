@@ -12,7 +12,13 @@ namespace AccountingODS.Serialization
         /// <summary>
         /// Serializes the list of invoices to the XML format
         /// </summary>
-        void Serialize();
+		void Serialize(IList<Data.Invoice> invoices);
+
+        /// <summary>
+        /// Deserializes XML document to list of invoices
+        /// </summary>
+        IList<Data.Invoice> DeSerialize(string filename);
+
 
     }
 }

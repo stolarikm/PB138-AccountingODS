@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Text.RegularExpressions;
 
 namespace AccountingODS.Serialization
 {
@@ -17,15 +18,16 @@ namespace AccountingODS.Serialization
         public int TableCount { get; private set; } = 3;
         public XElement CurrentTable { get; private set; }
 
-        public Serializer(IList<Invoice> invoices)
+        //public Serializer(IList<Invoice> invoices)
+        //{
+        //    Invoices = invoices;
+        //}
+
+
+
+		public void Serialize(IList<Invoice> invoices)
         {
-            Invoices = invoices;
-        }
-
-
-
-        public void Serialize()
-        {
+			Invoices = invoices;
             var wrapper = new OdsWrapper();
             wrapper.ExctractXmlFromODS(Paths.InputFolderPath + Path.DirectorySeparatorChar + "template.ods", Paths.InputFolderPath + Path.DirectorySeparatorChar);
             XDocument doc = XDocument.Load(Paths.InputFolderPath + Path.DirectorySeparatorChar + "content.xml");
@@ -47,6 +49,52 @@ namespace AccountingODS.Serialization
             }
             doc.Save(Paths.InputFolderPath + "content.xml");
             wrapper.InsertXmlToODS(Paths.InputFolderPath, Paths.OutputFolderPath + "result.ods");
+        }
+
+		public IList<Invoice> DeSerialize(string filename)
+        {
+            XDocument doc = XDocument.Load(filename);
+			List<Invoice> listOfInvoices = new List<Invoice>();
+            var root = doc.Root;
+
+            var ib = new InvoiceBuilder();
+
+            var sheets = root.Descendants()
+                        .Where(c => c.HasAttributes)
+                        .Where(c => c.FirstAttribute.ToString().Contains("Sheet"))
+                        .ToList();
+
+            var pattern = new Regex(@"Invoice (?<number>\d*) Invoice date: (?<date>\d\d/\d\d/\d{4}) Type: (?<type>\w*) Payment due by: (?<date2>\d\d/\d\d/\d{4}) Sum: (?<price>\d*\.?\d*) Creditor Debtor Creditor name: (?<cn>\w.*) Debtor name: (?<dn>\w.*) Creditor address: (?<ca>\w.*) Debtor address: (?<da>\w.*) Creditor zip: (?<cz>\w*) Debtor zip: (?<dz>\w*)");
+            var pattern2 = new Regex(@"name: (?<name>\w*) cost: (?<cost>\d*\.?\d*)");
+            foreach (var sheet in sheets)
+            {
+                if (sheet.Value != "")
+                {
+                    var dataToParse = sheet.Value;
+                    var match = pattern.Matches(dataToParse);
+                    var subMatch = pattern2.Matches(dataToParse);               
+
+					var type = match[0].Groups["type"].ToString() == "DEBT" ? InvoiceType.DEBT : InvoiceType.CREDIT;
+
+                    List<InvoiceItem> items = new List<InvoiceItem>();
+                    foreach (Match item in subMatch)
+                    {
+                        items.Add(new InvoiceItem(System.Convert.ToDecimal(item.Groups["cost"].ToString()), item.Groups["name"].ToString()));
+                    }
+                    var invoice = ib.SetInvoiceNumber(match[0].Groups["number"].ToString())
+                                    .SetInvoiceType(type)
+                                    .SetCreditor(new Person(match[0].Groups["cn"].ToString(), match[0].Groups["ca"].ToString(), match[0].Groups["cz"].ToString()))
+                                    .SetDebtor(new Person(match[0].Groups["dn"].ToString(), match[0].Groups["da"].ToString(), match[0].Groups["dz"].ToString()))
+                                    .SetInvoiceDate(DateTime.ParseExact(match[0].Groups["date"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture))
+                                    .SetMaturityDate(DateTime.ParseExact(match[0].Groups["date2"].ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture))
+                                    .SetInvoicedItems(items)
+                                    .Build();
+
+                    listOfInvoices.Add(invoice);
+                }            
+            }        
+
+            return listOfInvoices;
         }
 
 
@@ -198,17 +246,17 @@ namespace AccountingODS.Serialization
         /// <param name="seventhRow">Seventh row</param>
         private void FillInfoOfInvolvedPeople(Invoice invoice, XElement fifthRow, XElement sixthRow, XElement seventhRow)
         {
-            fifthRow.Add(InitCell(invoice.Creditor.FullName));
+			fifthRow.Add(InitCell("Creditor name: " + invoice.Creditor.FullName));
             AddEmptyCells(fifthRow);
-            fifthRow.Add(InitCell(invoice.Debtor.FullName));
+            fifthRow.Add(InitCell("Debtor name: " + invoice.Debtor.FullName));
 
-            sixthRow.Add(InitCell(invoice.Creditor.Adress));
+            sixthRow.Add(InitCell("Creditor address: " + invoice.Creditor.Adress));
             AddEmptyCells(sixthRow);
-            sixthRow.Add(InitCell(invoice.Debtor.Adress));
+            sixthRow.Add(InitCell("Debtor address: " + invoice.Debtor.Adress));
 
-            seventhRow.Add(InitCell(invoice.Creditor.ZIPCode));
+            seventhRow.Add(InitCell("Creditor zip: " + invoice.Creditor.ZIPCode));
             AddEmptyCells(seventhRow);
-            seventhRow.Add(InitCell(invoice.Debtor.ZIPCode));
+            seventhRow.Add(InitCell("Debtor zip: " + invoice.Debtor.ZIPCode));
         }
 
 
@@ -249,7 +297,7 @@ namespace AccountingODS.Serialization
 
             cell.SetAttributeValue(valTypeNamespace + "value-type", "string");
             cell.SetAttributeValue(calcextNamespace + "value-type", "string");
-            cell.Add(InitText(value));
+			cell.Add(InitText(value + " "));
 
             return cell;
         }
@@ -311,8 +359,8 @@ namespace AccountingODS.Serialization
                 AddRow(table);
                 var currentRow = table.Elements().ToList().ElementAt(i + 11);
                 currentRow.Add(InitCell(result.ElementAt(i).Quantity.ToString()));
-                currentRow.Add(InitCell(result.ElementAt(i).Name));
-                currentRow.Add(InitCell(result.ElementAt(i).Price.ToString()));
+				currentRow.Add(InitCell("name: " + result.ElementAt(i).Name));
+                currentRow.Add(InitCell("cost: " + result.ElementAt(i).Price.ToString()));
                 decimal subTotalSum = result.ElementAt(i).Quantity * result.ElementAt(i).Price;
                 currentRow.Add(InitCell(subTotalSum.ToString()));
             }

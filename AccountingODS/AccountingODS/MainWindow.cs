@@ -12,24 +12,16 @@ public partial class MainWindow : Window
 	private NodeView lastNodeFocused;
 	private List<Invoice> creditInvoices;
 	private List<Invoice> debtInvoices;
+	private Serializer serializer;
 
 	public MainWindow() : base(WindowType.Toplevel)
     {
 		Build();
 
 		//TODO: get invoices from ods
-		creditInvoices = new List<Invoice>{
-			new Invoice("91526135", InvoiceType.CREDIT
-							  , new Person("Antonin Repa", "Jaselska 20, Brno", "60200"), new Person("Frantisek Novak", "Botanicka 65, Brno", "60200")
-			            , DateTime.Parse("2018-5-30"), DateTime.Parse("2018-5-31")
-			            , new List<InvoiceItem> { new InvoiceItem(2499.0m, "Monitor"), new InvoiceItem(399.0m, "Klavesnica"), new InvoiceItem(349.0m, "Herna mys"), new InvoiceItem(1999.0m, "Headset") })
-		};
-		debtInvoices = new List<Invoice> {
-			new Invoice("248965", InvoiceType.DEBT
-                              , new Person("Frantisek Novak", "Botanicka 65, Brno", "60200"), new Person("Miroslav Krajnak", "Mudronova 20, Presov", "08001")
-			            , DateTime.Parse("2018-5-1"), DateTime.Parse("2018-5-29")
-			            , new List<InvoiceItem> { new InvoiceItem(29468.50m, "Bicykel"), new InvoiceItem(10.0m, "Jablko"), new InvoiceItem(10.0m, "Jablko"), new InvoiceItem(10.20m, "Jablko") })
-        };
+		serializer = new Serializer();
+        creditInvoices = serializer.DeSerialize(Paths.InputFolderPath + "content.xml").Where(c => c.Type == InvoiceType.CREDIT).ToList();
+        debtInvoices = serializer.DeSerialize(Paths.InputFolderPath + "content.xml").Where(c => c.Type == InvoiceType.DEBT).ToList();
 
 		populateNodeview(nodeviewCredit, creditInvoices);
 		populateNodeview(nodeviewDebt, debtInvoices);
@@ -108,7 +100,7 @@ public partial class MainWindow : Window
 				break;
 		}
 
-		new Serializer(creditInvoices.Concat(debtInvoices).ToList()).Serialize();
+		serializer.Serialize(creditInvoices.Concat(debtInvoices).ToList());
 
 		entryInvoiceNumber.Text = String.Empty;
 		entryDebtorName.Text = String.Empty;
@@ -130,7 +122,7 @@ public partial class MainWindow : Window
 			(lastNodeFocused.NodeSelection?.SelectedNode as InvoiceNode)?.Invoice.InvoicedItems.Add(item);
 			lastNodeFocused.IsFocus = true;
 
-			new Serializer(creditInvoices.Concat(debtInvoices).ToList()).Serialize();
+			serializer.Serialize(creditInvoices.Concat(debtInvoices).ToList());
 
 			entryInvoiceItemCost.Text = String.Empty;
 			entryInvoiceItemName.Text = String.Empty;
@@ -157,7 +149,7 @@ public partial class MainWindow : Window
 					break;
 			}
 
-			new Serializer(creditInvoices.Concat(debtInvoices).ToList()).Serialize();
+			serializer.Serialize(creditInvoices.Concat(debtInvoices).ToList());
         }
 	}
 
