@@ -5,31 +5,34 @@ using AccountingODS.Data;
 using Gtk;
 using System.Linq;
 using AccountingODS;
+using AccountingODS.Serialization;
 
 public partial class MainWindow : Window
 {
 	private NodeView lastNodeFocused;
+	private List<Invoice> creditInvoices;
+	private List<Invoice> debtInvoices;
 
 	public MainWindow() : base(WindowType.Toplevel)
     {
 		Build();
 
 		//TODO: get invoices from ods
-		List<Invoice> credits = new List<Invoice>{
+		creditInvoices = new List<Invoice>{
 			new Invoice("12", InvoiceType.CREDIT
 							  , new Person("name", "adress", "code"), new Person("name2", "adress2", "code2")
 							  , DateTime.Now, DateTime.Now
 							  , new List<InvoiceItem> { new InvoiceItem(1.0m, "type"), new InvoiceItem(10.0m, "item") })
 		};
-		List<Invoice> debts = new List<Invoice> {
+		debtInvoices = new List<Invoice> {
 			new Invoice("123", InvoiceType.DEBT
                               , new Person("name", "adress", "code"), new Person("name2", "adress2", "code2")
                               , DateTime.Now, DateTime.Now
                               , new List<InvoiceItem> { new InvoiceItem(1.0m, "type"), new InvoiceItem(10.0m, "item") })
         };
 
-		populateNodeview(nodeviewCredit, credits);
-		populateNodeview(nodeviewDebt, debts);
+		populateNodeview(nodeviewCredit, creditInvoices);
+		populateNodeview(nodeviewDebt, debtInvoices);
 
 		foreach (var value in Enum.GetValues(typeof(InvoiceType))) {
 			comboboxType.AppendText(value.ToString());	
@@ -97,9 +100,11 @@ public partial class MainWindow : Window
 		switch(type) {
 			case InvoiceType.CREDIT:
 				nodeviewCredit.NodeStore.AddNode(new InvoiceNode(invoice));
+				creditInvoices.Add(invoice);
 				break;
 			case InvoiceType.DEBT:
 				nodeviewDebt.NodeStore.AddNode(new InvoiceNode(invoice));
+				debtInvoices.Add(invoice);
 				break;
 		}
 		//TODO: add new invoice to ods
@@ -169,5 +174,10 @@ public partial class MainWindow : Window
 
 		new InvoiceDetailDialog(invoice.Invoice).Run();
         
+	}
+
+	protected void OnButtonExportToPdfClicked(object sender, EventArgs e)
+	{
+		new PdfExporter().Export(creditInvoices.Concat(debtInvoices).ToList(), System.IO.Path.Combine(Paths.OutputFolderPath, $"InvoicesExport{DateTime.Today.ToString("dd_MM_yyyy")}.pdf"));
 	}
 }
