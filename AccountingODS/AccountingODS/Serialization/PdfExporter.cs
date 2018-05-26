@@ -72,7 +72,7 @@ namespace AccountingODS.Serialization
 
             AddRangeToDocument(CreateMultiLine("Creditor", GetPersonInfo(invoice.Creditor)));
             AddRangeToDocument(CreateMultiLine("Debtor", GetPersonInfo(invoice.Debtor)));
-            AddRangeToDocument(CreateMultiLine("Items", invoice.InvoicedItems.Select(i => CreateSingleLine(i.Name, i.Cost.ToString(), 145)).ToArray()));
+            AddRangeToDocument(CreateMultiLine("Items", invoice.InvoicedItems.Select(i => CreateSingleLine(i.Name, i.Cost.ToString() + " Czk", 145)).ToArray()));
 
             document.Add(new Paragraph(HorizontalRow()));
             document.Add(new Paragraph(Environment.NewLine));
