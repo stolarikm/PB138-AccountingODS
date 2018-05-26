@@ -35,7 +35,7 @@
             <text:p>Invoice</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>123</text:p>
+            <text:p>12</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro2">
@@ -69,7 +69,7 @@
             <text:p>Sum:</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>80</text:p>
+            <text:p>11.0</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro4">
@@ -88,7 +88,7 @@
         </table:table-row>
         <table:table-row table:style-name="ro5">
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Helenka Vondrackova</text:p>
+            <text:p>name2</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
             <text:p></text:p>
@@ -97,12 +97,12 @@
             <text:p></text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Jiri Korn</text:p>
+            <text:p>name</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro6">
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Praha 5</text:p>
+            <text:p>adress2</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
             <text:p></text:p>
@@ -111,12 +111,12 @@
             <text:p></text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Praha 2</text:p>
+            <text:p>adress</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro7">
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>60005</text:p>
+            <text:p>code2</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
             <text:p></text:p>
@@ -125,7 +125,7 @@
             <text:p></text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>60000</text:p>
+            <text:p>code</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro8" />
@@ -148,13 +148,13 @@
             <text:p>1</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Hlupost</text:p>
+            <text:p>type</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>20</text:p>
+            <text:p>1.0</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>20</text:p>
+            <text:p>1.0</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro11">
@@ -162,31 +162,17 @@
             <text:p>1</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Blbost</text:p>
+            <text:p>item</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>50</text:p>
+            <text:p>10.0</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>50</text:p>
+            <text:p>10.0</text:p>
           </table:table-cell>
         </table:table-row>
-        <table:table-row table:style-name="ro12">
-          <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>1</text:p>
-          </table:table-cell>
-          <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Somarina</text:p>
-          </table:table-cell>
-          <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>10</text:p>
-          </table:table-cell>
-          <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>10</text:p>
-          </table:table-cell>
-        </table:table-row>
+        <table:table-row table:style-name="ro12" />
         <table:table-row table:style-name="ro13" />
-        <table:table-row table:style-name="ro14" />
       </table:table>
       <table:table table:name="Sheet2" table:style-name="ta1" table:print="false">
         <table:table-column table:style-name="co1" table:default-cell-style-name="Default" />
@@ -196,7 +182,7 @@
             <text:p>Invoice</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>223</text:p>
+            <text:p>123</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro2">
@@ -230,7 +216,7 @@
             <text:p>Sum:</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>80</text:p>
+            <text:p>324555.8818148</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro4">
@@ -249,7 +235,7 @@
         </table:table-row>
         <table:table-row table:style-name="ro5">
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Cigan Druhy</text:p>
+            <text:p>name2</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
             <text:p></text:p>
@@ -258,12 +244,12 @@
             <text:p></text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Cigan Prvy</text:p>
+            <text:p>name</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro6">
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Hybe 12</text:p>
+            <text:p>adress2</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
             <text:p></text:p>
@@ -272,12 +258,12 @@
             <text:p></text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Nikde 0</text:p>
+            <text:p>adress</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro7">
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>12345</text:p>
+            <text:p>code2</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
             <text:p></text:p>
@@ -286,7 +272,7 @@
             <text:p></text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>00000</text:p>
+            <text:p>code</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro8" />
@@ -309,13 +295,13 @@
             <text:p>1</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Hlupost</text:p>
+            <text:p>type</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>20</text:p>
+            <text:p>1.0</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>20</text:p>
+            <text:p>1.0</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro11">
@@ -323,13 +309,13 @@
             <text:p>1</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Blbost</text:p>
+            <text:p>item</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>50</text:p>
+            <text:p>10.0</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>50</text:p>
+            <text:p>10.0</text:p>
           </table:table-cell>
         </table:table-row>
         <table:table-row table:style-name="ro12">
@@ -337,17 +323,31 @@
             <text:p>1</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>Somarina</text:p>
+            <text:p></text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>10</text:p>
+            <text:p>3232</text:p>
           </table:table-cell>
           <table:table-cell office:value-type="string" calcext:value-type="string">
-            <text:p>10</text:p>
+            <text:p>3232</text:p>
           </table:table-cell>
         </table:table-row>
-        <table:table-row table:style-name="ro13" />
+        <table:table-row table:style-name="ro13">
+          <table:table-cell office:value-type="string" calcext:value-type="string">
+            <text:p>1</text:p>
+          </table:table-cell>
+          <table:table-cell office:value-type="string" calcext:value-type="string">
+            <text:p></text:p>
+          </table:table-cell>
+          <table:table-cell office:value-type="string" calcext:value-type="string">
+            <text:p>321312.8818148</text:p>
+          </table:table-cell>
+          <table:table-cell office:value-type="string" calcext:value-type="string">
+            <text:p>321312.8818148</text:p>
+          </table:table-cell>
+        </table:table-row>
         <table:table-row table:style-name="ro14" />
+        <table:table-row table:style-name="ro15" />
       </table:table>
       <table:table table:name="Sheet3" table:style-name="ta1" table:print="false">
         <table:table-column table:style-name="co1" table:default-cell-style-name="Default" />
