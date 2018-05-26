@@ -10,11 +10,13 @@ Fakulta informatiky
 Martin Balucha  
 Peter Holodňák  
 Michal Stolárik
+Augustín Nemec
 
 ## Rozdelenie úloh
 Michal Stolárik - Ukladanie a načítanie XML dokumentov z ODS, export dát do PDF  
 Martin Balucha - Evidencia príjmov/výdajov, serializácia dát do XML dokumentu  
 Peter Holodňák - Spracovanie dát, grafické uživateľské rozhranie
+Augustín Nemec - Deserializácia dat z XML dokumentu, XML Schema
 
 ## Zadávateľ projektu:
 Mgr. Luděk Bártek, Ph.D.
