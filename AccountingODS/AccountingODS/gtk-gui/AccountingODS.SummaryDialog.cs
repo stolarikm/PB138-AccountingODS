@@ -47,6 +47,7 @@ namespace AccountingODS
 			// Container child table1.Gtk.Table+TableChild
 			this.label1 = new global::Gtk.Label();
 			this.label1.Name = "label1";
+			this.label1.Ypad = 21;
 			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString("Overview of incomes and expenditures of current accounting period");
 			this.label1.Justify = ((global::Gtk.Justification)(2));
 			this.table1.Add(this.label1);
@@ -60,6 +61,7 @@ namespace AccountingODS
 			this.table3.ColumnSpacing = ((uint)(6));
 			// Container child table3.Gtk.Table+TableChild
 			this.label2 = new global::Gtk.Label();
+			this.label2.WidthRequest = 120;
 			this.label2.Name = "label2";
 			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString("Incomes:");
 			this.table3.Add(this.label2);
@@ -88,6 +90,7 @@ namespace AccountingODS
 			this.table4.ColumnSpacing = ((uint)(6));
 			// Container child table4.Gtk.Table+TableChild
 			this.label4 = new global::Gtk.Label();
+			this.label4.WidthRequest = 120;
 			this.label4.Name = "label4";
 			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString("Expenditures:");
 			this.table4.Add(this.label4);
@@ -98,7 +101,7 @@ namespace AccountingODS
 			this.labelExpenditures = new global::Gtk.Label();
 			this.labelExpenditures.Name = "labelExpenditures";
 			this.labelExpenditures.LabelProp = global::Mono.Unix.Catalog.GetString("label5");
-			this.labelExpenditures.Justify = ((global::Gtk.Justification)(2));
+			this.labelExpenditures.Justify = ((global::Gtk.Justification)(1));
 			this.table4.Add(this.labelExpenditures);
 			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table4[this.labelExpenditures]));
 			w7.LeftAttach = ((uint)(1));
@@ -117,6 +120,7 @@ namespace AccountingODS
 			this.table5.ColumnSpacing = ((uint)(6));
 			// Container child table5.Gtk.Table+TableChild
 			this.label6 = new global::Gtk.Label();
+			this.label6.WidthRequest = 120;
 			this.label6.Name = "label6";
 			this.label6.LabelProp = global::Mono.Unix.Catalog.GetString("DIfference:");
 			this.table5.Add(this.label6);
@@ -127,7 +131,7 @@ namespace AccountingODS
 			this.labelDifference = new global::Gtk.Label();
 			this.labelDifference.Name = "labelDifference";
 			this.labelDifference.LabelProp = global::Mono.Unix.Catalog.GetString("label7");
-			this.labelDifference.Justify = ((global::Gtk.Justification)(2));
+			this.labelDifference.Justify = ((global::Gtk.Justification)(1));
 			this.table5.Add(this.labelDifference);
 			global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.table5[this.labelDifference]));
 			w10.LeftAttach = ((uint)(1));
@@ -167,7 +171,7 @@ namespace AccountingODS
 				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 471;
-			this.DefaultHeight = 137;
+			this.DefaultHeight = 232;
 			this.Show();
 			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
 		}

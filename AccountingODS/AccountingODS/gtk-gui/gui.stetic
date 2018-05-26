@@ -1619,7 +1619,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="AccountingODS.SummaryDialog" design-size="471 137">
+  <widget class="Gtk.Dialog" id="AccountingODS.SummaryDialog" design-size="471 232">
     <property name="MemberName" />
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Buttons">1</property>
@@ -1638,6 +1638,7 @@
             <child>
               <widget class="Gtk.Label" id="label1">
                 <property name="MemberName" />
+                <property name="Ypad">21</property>
                 <property name="LabelProp" translatable="yes">Overview of incomes and expenditures of current accounting period</property>
                 <property name="Justify">Center</property>
               </widget>
@@ -1662,6 +1663,7 @@
                 <child>
                   <widget class="Gtk.Label" id="label2">
                     <property name="MemberName" />
+                    <property name="WidthRequest">120</property>
                     <property name="LabelProp" translatable="yes">Incomes:</property>
                   </widget>
                   <packing>
@@ -1718,6 +1720,7 @@
                 <child>
                   <widget class="Gtk.Label" id="label4">
                     <property name="MemberName" />
+                    <property name="WidthRequest">120</property>
                     <property name="LabelProp" translatable="yes">Expenditures:</property>
                   </widget>
                   <packing>
@@ -1736,7 +1739,7 @@
                   <widget class="Gtk.Label" id="labelExpenditures">
                     <property name="MemberName" />
                     <property name="LabelProp" translatable="yes">label5</property>
-                    <property name="Justify">Center</property>
+                    <property name="Justify">Right</property>
                   </widget>
                   <packing>
                     <property name="LeftAttach">1</property>
@@ -1775,6 +1778,7 @@
                 <child>
                   <widget class="Gtk.Label" id="label6">
                     <property name="MemberName" />
+                    <property name="WidthRequest">120</property>
                     <property name="LabelProp" translatable="yes">DIfference:</property>
                   </widget>
                   <packing>
@@ -1793,7 +1797,7 @@
                   <widget class="Gtk.Label" id="labelDifference">
                     <property name="MemberName" />
                     <property name="LabelProp" translatable="yes">label7</property>
-                    <property name="Justify">Center</property>
+                    <property name="Justify">Right</property>
                   </widget>
                   <packing>
                     <property name="LeftAttach">1</property>
