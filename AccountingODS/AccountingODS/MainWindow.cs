@@ -107,7 +107,8 @@ public partial class MainWindow : Window
 				debtInvoices.Add(invoice);
 				break;
 		}
-		//TODO: add new invoice to ods
+
+		new Serializer(creditInvoices.Concat(debtInvoices).ToList()).Serialize();
 
 		entryInvoiceNumber.Text = String.Empty;
 		entryDebtorName.Text = String.Empty;
@@ -128,7 +129,8 @@ public partial class MainWindow : Window
 			var item = new InvoiceItem(cost, entryInvoiceItemName.Text);
 			(lastNodeFocused.NodeSelection?.SelectedNode as InvoiceNode)?.Invoice.InvoicedItems.Add(item);
 			lastNodeFocused.IsFocus = true;
-			//TODO: add new item to ods
+
+			new Serializer(creditInvoices.Concat(debtInvoices).ToList()).Serialize();
 
 			entryInvoiceItemCost.Text = String.Empty;
 			entryInvoiceItemName.Text = String.Empty;
@@ -154,7 +156,8 @@ public partial class MainWindow : Window
 					debtInvoices.Remove(invoice.Invoice);
 					break;
 			}
-			//TODO: remove invoice from ods
+
+			new Serializer(creditInvoices.Concat(debtInvoices).ToList()).Serialize();
         }
 	}
 
@@ -187,5 +190,10 @@ public partial class MainWindow : Window
 	protected void OnButtonExportToPdfClicked(object sender, EventArgs e)
 	{
 		new PdfExporter().Export(creditInvoices.Concat(debtInvoices).ToList(), System.IO.Path.Combine(Paths.OutputFolderPath, $"InvoicesExport{DateTime.Today.ToString("dd_MM_yyyy")}.pdf"));
+	}
+
+	protected void OnButton11Clicked(object sender, EventArgs e)
+	{
+		new SummaryDialog(debtInvoices, creditInvoices).Run();
 	}
 }

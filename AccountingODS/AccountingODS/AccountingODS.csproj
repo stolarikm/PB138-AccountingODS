@@ -87,6 +87,8 @@
     <Compile Include="Serialization\ISerializer.cs" />
     <Compile Include="Serialization\Serializer.cs" />
     <Compile Include="Data\InvoiceBuilder.cs" />
+    <Compile Include="SummaryDialog.cs" />
+    <Compile Include="gtk-gui\AccountingODS.SummaryDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
