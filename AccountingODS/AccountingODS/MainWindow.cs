@@ -146,6 +146,14 @@ public partial class MainWindow : Window
 		var invoice = lastNodeFocused.NodeSelection.SelectedNode as InvoiceNode;
 		if (invoice != null) {
 			lastNodeFocused.NodeStore.RemoveNode(invoice);
+			switch (invoice.Invoice.Type) {
+				case InvoiceType.CREDIT:
+					creditInvoices.Remove(invoice.Invoice);
+					break;
+				case InvoiceType.DEBT:
+					debtInvoices.Remove(invoice.Invoice);
+					break;
+			}
 			//TODO: remove invoice from ods
         }
 	}
