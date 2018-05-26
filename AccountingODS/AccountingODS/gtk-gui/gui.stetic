@@ -6,7 +6,7 @@
   <import>
     <widget-library name="../bin/Debug/AccountingODS.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="1510 723">
+  <widget class="Gtk.Window" id="MainWindow" design-size="1541 731">
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -22,6 +22,7 @@
         <child>
           <widget class="Gtk.Table" id="table12">
             <property name="MemberName" />
+            <property name="WidthRequest">1</property>
             <property name="NRows">3</property>
             <property name="RowSpacing">6</property>
             <property name="ColumnSpacing">6</property>
@@ -50,6 +51,7 @@
                 <child>
                   <widget class="Gtk.NodeView" id="nodeviewCredit">
                     <property name="MemberName" />
+                    <property name="WidthRequest">150</property>
                     <property name="CanFocus">True</property>
                   </widget>
                 </child>
@@ -70,17 +72,42 @@
             <child>
               <widget class="Gtk.Table" id="table6">
                 <property name="MemberName" />
-                <property name="NRows">2</property>
+                <property name="NRows">3</property>
                 <property name="RowSpacing">6</property>
                 <property name="ColumnSpacing">6</property>
                 <child>
-                  <widget class="Gtk.Button" id="buttonShowInvoiceDetail">
+                  <widget class="Gtk.Button" id="buttonDeleteInvoice">
                     <property name="MemberName" />
+                    <property name="HeightRequest">30</property>
                     <property name="CanFocus">True</property>
                     <property name="Type">TextOnly</property>
-                    <property name="Label" translatable="yes">Show invoice detail</property>
+                    <property name="Label" translatable="yes">Delete invoice</property>
                     <property name="UseUnderline">True</property>
-                    <signal name="Clicked" handler="OnButtonShowInvoiceDetailClicked" />
+                    <signal name="Clicked" handler="OnButtonDeleteInvoiceClicked" />
+                  </widget>
+                  <packing>
+                    <property name="TopAttach">2</property>
+                    <property name="BottomAttach">3</property>
+                    <property name="AutoSize">True</property>
+                    <property name="XOptions">Fill</property>
+                    <property name="YOptions">Fill</property>
+                    <property name="XExpand">False</property>
+                    <property name="XFill">True</property>
+                    <property name="XShrink">False</property>
+                    <property name="YExpand">False</property>
+                    <property name="YFill">True</property>
+                    <property name="YShrink">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="ButtonExportToPdf">
+                    <property name="MemberName" />
+                    <property name="HeightRequest">30</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Type">TextOnly</property>
+                    <property name="Label" translatable="yes">Export to pdf</property>
+                    <property name="UseUnderline">True</property>
+                    <signal name="Clicked" handler="OnButtonExportToPdfClicked" />
                   </widget>
                   <packing>
                     <property name="TopAttach">1</property>
@@ -96,48 +123,14 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="Gtk.Table" id="table11">
+                  <widget class="Gtk.Button" id="buttonShowInvoiceDetail">
                     <property name="MemberName" />
-                    <property name="NColumns">2</property>
-                    <property name="RowSpacing">6</property>
-                    <property name="ColumnSpacing">6</property>
-                    <child>
-                      <widget class="Gtk.Entry" id="entryInvoiceItemName">
-                        <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="IsEditable">True</property>
-                        <property name="InvisibleChar">•</property>
-                      </widget>
-                      <packing>
-                        <property name="LeftAttach">1</property>
-                        <property name="RightAttach">2</property>
-                        <property name="AutoSize">True</property>
-                        <property name="YOptions">Fill</property>
-                        <property name="XExpand">True</property>
-                        <property name="XFill">True</property>
-                        <property name="XShrink">False</property>
-                        <property name="YExpand">False</property>
-                        <property name="YFill">True</property>
-                        <property name="YShrink">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.Label" id="label11">
-                        <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Item text</property>
-                      </widget>
-                      <packing>
-                        <property name="AutoSize">True</property>
-                        <property name="XOptions">Fill</property>
-                        <property name="YOptions">Fill</property>
-                        <property name="XExpand">False</property>
-                        <property name="XFill">True</property>
-                        <property name="XShrink">False</property>
-                        <property name="YExpand">False</property>
-                        <property name="YFill">True</property>
-                        <property name="YShrink">False</property>
-                      </packing>
-                    </child>
+                    <property name="HeightRequest">30</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Type">TextOnly</property>
+                    <property name="Label" translatable="yes">Show invoice detail</property>
+                    <property name="UseUnderline">True</property>
+                    <signal name="Clicked" handler="OnButtonShowInvoiceDetailClicked" />
                   </widget>
                   <packing>
                     <property name="AutoSize">True</property>
@@ -188,6 +181,7 @@
             <child>
               <widget class="Gtk.Button" id="buttonAddInvoice">
                 <property name="MemberName" />
+                <property name="HeightRequest">36</property>
                 <property name="CanFocus">True</property>
                 <property name="Type">TextOnly</property>
                 <property name="Label" translatable="yes">Add invoice</property>
@@ -671,6 +665,7 @@
         <child>
           <widget class="Gtk.Table" id="table9">
             <property name="MemberName" />
+            <property name="WidthRequest">1</property>
             <property name="NRows">3</property>
             <property name="RowSpacing">6</property>
             <property name="ColumnSpacing">6</property>
@@ -699,6 +694,7 @@
                 <child>
                   <widget class="Gtk.NodeView" id="nodeviewDebt">
                     <property name="MemberName" />
+                    <property name="WidthRequest">0</property>
                     <property name="CanFocus">True</property>
                   </widget>
                 </child>
@@ -719,9 +715,88 @@
             <child>
               <widget class="Gtk.Table" id="table5">
                 <property name="MemberName" />
-                <property name="NRows">2</property>
+                <property name="NRows">3</property>
                 <property name="RowSpacing">6</property>
                 <property name="ColumnSpacing">6</property>
+                <child>
+                  <widget class="Gtk.Button" id="ButtonAddInvoiceItem">
+                    <property name="MemberName" />
+                    <property name="HeightRequest">36</property>
+                    <property name="CanFocus">True</property>
+                    <property name="Type">TextOnly</property>
+                    <property name="Label" translatable="yes">Add invoice item</property>
+                    <property name="UseUnderline">True</property>
+                    <signal name="Clicked" handler="OnButtonAddInvoiceItemClicked" />
+                  </widget>
+                  <packing>
+                    <property name="TopAttach">2</property>
+                    <property name="BottomAttach">3</property>
+                    <property name="AutoSize">False</property>
+                    <property name="YOptions">Fill</property>
+                    <property name="XExpand">True</property>
+                    <property name="XFill">True</property>
+                    <property name="XShrink">False</property>
+                    <property name="YExpand">False</property>
+                    <property name="YFill">True</property>
+                    <property name="YShrink">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Table" id="table1">
+                    <property name="MemberName" />
+                    <property name="NColumns">2</property>
+                    <property name="RowSpacing">6</property>
+                    <property name="ColumnSpacing">6</property>
+                    <child>
+                      <widget class="Gtk.Entry" id="entryInvoiceItemName">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="IsEditable">True</property>
+                        <property name="InvisibleChar">•</property>
+                      </widget>
+                      <packing>
+                        <property name="LeftAttach">1</property>
+                        <property name="RightAttach">2</property>
+                        <property name="AutoSize">True</property>
+                        <property name="YOptions">Fill</property>
+                        <property name="XExpand">True</property>
+                        <property name="XFill">True</property>
+                        <property name="XShrink">False</property>
+                        <property name="YExpand">False</property>
+                        <property name="YFill">True</property>
+                        <property name="YShrink">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label11">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Item text</property>
+                      </widget>
+                      <packing>
+                        <property name="AutoSize">True</property>
+                        <property name="XOptions">Fill</property>
+                        <property name="YOptions">Fill</property>
+                        <property name="XExpand">False</property>
+                        <property name="XFill">True</property>
+                        <property name="XShrink">False</property>
+                        <property name="YExpand">False</property>
+                        <property name="YFill">True</property>
+                        <property name="YShrink">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="AutoSize">True</property>
+                    <property name="XOptions">Fill</property>
+                    <property name="YOptions">Fill</property>
+                    <property name="XExpand">False</property>
+                    <property name="XFill">True</property>
+                    <property name="XShrink">False</property>
+                    <property name="YExpand">False</property>
+                    <property name="YFill">True</property>
+                    <property name="YShrink">False</property>
+                  </packing>
+                </child>
                 <child>
                   <widget class="Gtk.Table" id="table10">
                     <property name="MemberName" />
@@ -739,7 +814,7 @@
                       <packing>
                         <property name="LeftAttach">1</property>
                         <property name="RightAttach">2</property>
-                        <property name="AutoSize">False</property>
+                        <property name="AutoSize">True</property>
                         <property name="YOptions">Fill</property>
                         <property name="XExpand">True</property>
                         <property name="XFill">True</property>
@@ -768,72 +843,12 @@
                     </child>
                   </widget>
                   <packing>
+                    <property name="TopAttach">1</property>
+                    <property name="BottomAttach">2</property>
                     <property name="AutoSize">True</property>
                     <property name="XOptions">Fill</property>
                     <property name="YOptions">Fill</property>
                     <property name="XExpand">False</property>
-                    <property name="XFill">True</property>
-                    <property name="XShrink">False</property>
-                    <property name="YExpand">False</property>
-                    <property name="YFill">True</property>
-                    <property name="YShrink">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="Gtk.Table" id="table7">
-                    <property name="MemberName" />
-                    <property name="NColumns">2</property>
-                    <property name="RowSpacing">6</property>
-                    <property name="ColumnSpacing">6</property>
-                    <child>
-                      <widget class="Gtk.Button" id="buttonAddInvoiceItem">
-                        <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextOnly</property>
-                        <property name="Label" translatable="yes">Add invoice item</property>
-                        <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnButtonAddInvoiceItemClicked" />
-                      </widget>
-                      <packing>
-                        <property name="AutoSize">False</property>
-                        <property name="YOptions">Fill</property>
-                        <property name="XExpand">True</property>
-                        <property name="XFill">True</property>
-                        <property name="XShrink">False</property>
-                        <property name="YExpand">False</property>
-                        <property name="YFill">True</property>
-                        <property name="YShrink">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="Gtk.Button" id="buttonDeleteInvoice">
-                        <property name="MemberName" />
-                        <property name="CanFocus">True</property>
-                        <property name="Type">TextOnly</property>
-                        <property name="Label" translatable="yes">Delete invoice</property>
-                        <property name="UseUnderline">True</property>
-                        <signal name="Clicked" handler="OnButtonDeleteInvoiceClicked" />
-                      </widget>
-                      <packing>
-                        <property name="LeftAttach">1</property>
-                        <property name="RightAttach">2</property>
-                        <property name="AutoSize">False</property>
-                        <property name="YOptions">Fill</property>
-                        <property name="XExpand">True</property>
-                        <property name="XFill">True</property>
-                        <property name="XShrink">False</property>
-                        <property name="YExpand">False</property>
-                        <property name="YFill">True</property>
-                        <property name="YShrink">False</property>
-                      </packing>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="TopAttach">1</property>
-                    <property name="BottomAttach">2</property>
-                    <property name="AutoSize">False</property>
-                    <property name="YOptions">Fill</property>
-                    <property name="XExpand">True</property>
                     <property name="XFill">True</property>
                     <property name="XShrink">False</property>
                     <property name="YExpand">False</property>

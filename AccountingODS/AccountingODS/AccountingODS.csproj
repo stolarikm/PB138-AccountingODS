@@ -84,6 +84,9 @@
     <Compile Include="Serialization\PdfExporter.cs" />
     <Compile Include="InvoiceDetailDialog.cs" />
     <Compile Include="gtk-gui\AccountingODS.InvoiceDetailDialog.cs" />
+    <Compile Include="Serialization\ISerializer.cs" />
+    <Compile Include="Serialization\Serializer.cs" />
+    <Compile Include="Data\InvoiceBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
