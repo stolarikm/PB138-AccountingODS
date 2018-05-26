@@ -1849,12 +1849,11 @@
             <property name="MemberName" />
             <property name="CanDefault">True</property>
             <property name="CanFocus">True</property>
-            <property name="UseStock">True</property>
-            <property name="Type">StockItem</property>
-            <property name="StockId">gtk-ok</property>
-            <property name="ResponseId">-5</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Close</property>
+            <property name="UseUnderline">True</property>
+            <property name="ResponseId">0</property>
             <signal name="Clicked" handler="OnButtonOkClicked" />
-            <property name="label">gtk-ok</property>
           </widget>
           <packing>
             <property name="Expand">False</property>
