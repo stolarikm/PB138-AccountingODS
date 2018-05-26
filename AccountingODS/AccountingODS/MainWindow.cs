@@ -19,16 +19,16 @@ public partial class MainWindow : Window
 
 		//TODO: get invoices from ods
 		creditInvoices = new List<Invoice>{
-			new Invoice("12", InvoiceType.CREDIT
-							  , new Person("name", "adress", "code"), new Person("name2", "adress2", "code2")
-							  , DateTime.Now, DateTime.Now
-							  , new List<InvoiceItem> { new InvoiceItem(1.0m, "type"), new InvoiceItem(10.0m, "item") })
+			new Invoice("91526135", InvoiceType.CREDIT
+							  , new Person("Antonin Repa", "Jaselska 20, Brno", "60200"), new Person("Frantisek Novak", "Botanicka 65, Brno", "60200")
+			            , DateTime.Parse("2018-5-30"), DateTime.Parse("2018-5-31")
+			            , new List<InvoiceItem> { new InvoiceItem(2499.0m, "Monitor"), new InvoiceItem(399.0m, "Klavesnica"), new InvoiceItem(349.0m, "Herna mys"), new InvoiceItem(1999.0m, "Headset") })
 		};
 		debtInvoices = new List<Invoice> {
-			new Invoice("123", InvoiceType.DEBT
-                              , new Person("name", "adress", "code"), new Person("name2", "adress2", "code2")
-                              , DateTime.Now, DateTime.Now
-                              , new List<InvoiceItem> { new InvoiceItem(1.0m, "type"), new InvoiceItem(10.0m, "item") })
+			new Invoice("248965", InvoiceType.DEBT
+                              , new Person("Frantisek Novak", "Botanicka 65, Brno", "60200"), new Person("Miroslav Krajnak", "Mudronova 20, Presov", "08001")
+			            , DateTime.Parse("2018-5-1"), DateTime.Parse("2018-5-29")
+			            , new List<InvoiceItem> { new InvoiceItem(29468.50m, "Bicykel"), new InvoiceItem(10.0m, "Jablko"), new InvoiceItem(10.0m, "Jablko"), new InvoiceItem(10.20m, "Jablko") })
         };
 
 		populateNodeview(nodeviewCredit, creditInvoices);
