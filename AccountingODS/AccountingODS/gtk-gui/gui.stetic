@@ -1603,12 +1603,11 @@
         <child>
           <widget class="Gtk.Button" id="buttonCancel">
             <property name="MemberName" />
-            <property name="CanDefault">True</property>
             <property name="CanFocus">True</property>
             <property name="Type">TextOnly</property>
             <property name="Label" translatable="yes">Close</property>
             <property name="UseUnderline">True</property>
-            <property name="ResponseId">-6</property>
+            <property name="ResponseId">0</property>
             <signal name="Clicked" handler="OnButtonCancelClicked" />
           </widget>
           <packing>
@@ -1845,15 +1844,14 @@
         <property name="Size">1</property>
         <property name="LayoutStyle">End</property>
         <child>
-          <widget class="Gtk.Button" id="buttonOk">
+          <widget class="Gtk.Button" id="buttonCancel">
             <property name="MemberName" />
-            <property name="CanDefault">True</property>
             <property name="CanFocus">True</property>
             <property name="Type">TextOnly</property>
             <property name="Label" translatable="yes">Close</property>
             <property name="UseUnderline">True</property>
             <property name="ResponseId">0</property>
-            <signal name="Clicked" handler="OnButtonOkClicked" />
+            <signal name="Clicked" handler="OnButtonCancelClicked" />
           </widget>
           <packing>
             <property name="Expand">False</property>

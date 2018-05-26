@@ -16,9 +16,10 @@ namespace AccountingODS
 			labelIncomes.Text = incomes + " CZK";
 			labelExpenditures.Text = expenditures + " CZK";
 			labelDifference.Text = (incomes - expenditures) + " CZK";
+			buttonCancel.IsFocus = false;
         }
 
-		protected void OnButtonOkClicked(object sender, EventArgs e)
+		protected void OnButtonCancelClicked(object sender, EventArgs e)
 		{
 			this.Destroy();
 		}

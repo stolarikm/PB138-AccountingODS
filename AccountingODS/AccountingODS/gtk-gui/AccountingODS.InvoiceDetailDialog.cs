@@ -429,12 +429,11 @@ namespace AccountingODS
 			w38.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonCancel = new global::Gtk.Button();
-			this.buttonCancel.CanDefault = true;
 			this.buttonCancel.CanFocus = true;
 			this.buttonCancel.Name = "buttonCancel";
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = global::Mono.Unix.Catalog.GetString("Close");
-			this.AddActionWidget(this.buttonCancel, -6);
+			this.AddActionWidget(this.buttonCancel, 0);
 			global::Gtk.ButtonBox.ButtonBoxChild w39 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w38[this.buttonCancel]));
 			w39.Expand = false;
 			w39.Fill = false;

@@ -26,7 +26,7 @@ namespace AccountingODS
 
 		private global::Gtk.Label labelDifference;
 
-		private global::Gtk.Button buttonOk;
+		private global::Gtk.Button buttonCancel;
 
 		protected virtual void Build()
 		{
@@ -155,15 +155,13 @@ namespace AccountingODS
 			w13.BorderWidth = ((uint)(5));
 			w13.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonOk = new global::Gtk.Button();
-			this.buttonOk.CanDefault = true;
-			this.buttonOk.CanFocus = true;
-			this.buttonOk.Name = "buttonOk";
-			this.buttonOk.UseStock = true;
-			this.buttonOk.UseUnderline = true;
-			this.buttonOk.Label = "gtk-ok";
-			this.AddActionWidget(this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w14 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w13[this.buttonOk]));
+			this.buttonCancel = new global::Gtk.Button();
+			this.buttonCancel.CanFocus = true;
+			this.buttonCancel.Name = "buttonCancel";
+			this.buttonCancel.UseUnderline = true;
+			this.buttonCancel.Label = global::Mono.Unix.Catalog.GetString("Close");
+			this.AddActionWidget(this.buttonCancel, 0);
+			global::Gtk.ButtonBox.ButtonBoxChild w14 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w13[this.buttonCancel]));
 			w14.Expand = false;
 			w14.Fill = false;
 			if ((this.Child != null))
@@ -173,7 +171,7 @@ namespace AccountingODS
 			this.DefaultWidth = 471;
 			this.DefaultHeight = 232;
 			this.Show();
-			this.buttonOk.Clicked += new global::System.EventHandler(this.OnButtonOkClicked);
+			this.buttonCancel.Clicked += new global::System.EventHandler(this.OnButtonCancelClicked);
 		}
 	}
 }
