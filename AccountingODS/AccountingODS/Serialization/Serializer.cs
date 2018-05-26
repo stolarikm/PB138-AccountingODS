@@ -12,13 +12,14 @@ namespace AccountingODS.Serialization
 {
     public class Serializer : ISerializer
     {
-        public Invoice Invoice { get; private set; }
-        public int RowCount { get; private set; } = 3;
-        public int ColumnCount { get; private set; } = 3;
+        public IList<Invoice> Invoices { get; private set; } = new List<Invoice>();
+        public int RowCount { get; private set; } = 1;
+        public int TableCount { get; private set; } = 3;
+        public XElement CurrentTable { get; private set; }
 
-        public Serializer(Invoice invoice)
+        public Serializer(IList<Invoice> invoices)
         {
-            Invoice = invoice;
+            Invoices = invoices;
         }
 
 
@@ -28,16 +29,76 @@ namespace AccountingODS.Serialization
             XDocument doc = XDocument.Load(Paths.InputFolderPath + Path.DirectorySeparatorChar + "content.xml");
             var root = doc.Root;
 
-            var table = root.Descendants()
+            var spreadsheet = root.Descendants()
+                                  .Where(element => element.Name.LocalName == "spreadsheet")
+                                  .First();
+            AddNewTables(spreadsheet);
+
+            var tables = root.Descendants()
                         .Where(element => element.Name.LocalName == "table")
-                        .First();
+                        .ToList();
 
-            PrepareTable(table);
-            FillTable(table);
-
+            
+            for (int i = 0; i < Invoices.Count; i++)
+            {
+                SerializeInvoice(Invoices.ElementAt(i), tables.ElementAt(i));
+            }
             doc.Save(Paths.OutputFolderPath + "content.xml");
             var wrapper = new OdsWrapper();
-            wrapper.InsertXmlToODS(Paths.OutputFolderPath, Paths.OutputFolderPath + "Invoice" + Invoice.InvoiceNumber + ".ods");
+            wrapper.InsertXmlToODS(Paths.OutputFolderPath, Paths.OutputFolderPath + "result.ods");
+        }
+
+
+        /// <summary>
+        /// Serializes an invoice
+        /// </summary>
+        /// <param name="invoice">Invoice which is to be serialized</param>
+        public void SerializeInvoice(Invoice invoice, XElement table)
+        {
+            PrepareTable(table);
+            FillTable(invoice, table);            
+        }
+
+
+        private void AddNewTables(XElement spreadsheet)
+        {
+            if (Invoices.Count <= TableCount)
+            {
+                return;
+            }
+
+            var expressionElement = spreadsheet.Elements().Where(element => element.Name.LocalName == "named-expressions").First();
+            expressionElement?.Remove();
+
+            XNamespace tableNs = "urn:oasis:names:tc:opendocument:xmlns:table:1.0";
+            for (int i = 3; i < Invoices.Count; i++)
+            {
+                XElement table = new XElement(tableNs + "table");
+                InitNewTable(table, tableNs);
+                spreadsheet.Add(table);
+            }
+            spreadsheet.Add(expressionElement);
+        } 
+
+
+        private void InitNewTable(XElement table, XNamespace tableNamespace)
+        {
+            AddColumn(table, tableNamespace, 1);
+            AddColumn(table, tableNamespace, 2);
+
+            TableCount++;
+            table.SetAttributeValue(tableNamespace + "name", "Sheet" + TableCount);
+            table.SetAttributeValue(tableNamespace + "style-name", "ta1");
+            table.SetAttributeValue(tableNamespace + "print", "false");
+        }
+
+
+        private void AddColumn(XElement table, XNamespace ns, int columnNumber)
+        {
+            var column = new XElement(ns + "table-column");
+            column.SetAttributeValue(ns + "style-name", "co" + columnNumber);
+            column.SetAttributeValue(ns + "default-cell-style-name", "Default");
+            table.Add(column);
         }
 
 
@@ -45,14 +106,14 @@ namespace AccountingODS.Serialization
         /// Fills the table with all necessary data
         /// </summary>
         /// <param name="table"></param>
-        private void FillTable(XElement table)
+        private void FillTable(Invoice invoice, XElement table)
         {
-            FillInvoiceHeader(GetNthRow(table, 1));
-            FillSecondRow(GetNthRow(table, 2));
-            FillThirdRow(GetNthRow(table, 3));
+            FillInvoiceHeader(invoice, GetNthRow(table, 1));
+            FillSecondRow(invoice, GetNthRow(table, 2));
+            FillThirdRow(invoice, GetNthRow(table, 3));
             FillFourthRow(GetNthRow(table, 4));
-            FillInfoOfInvolvedPeople(GetNthRow(table, 5), GetNthRow(table, 6), GetNthRow(table, 7));
-            FillInvoicedGoodsTable(table);
+            FillInfoOfInvolvedPeople(invoice, GetNthRow(table, 5), GetNthRow(table, 6), GetNthRow(table, 7));
+            FillInvoicedGoodsTable(invoice, table);
         }
 
 
@@ -74,19 +135,15 @@ namespace AccountingODS.Serialization
         /// Fills the second row of the document with the invoice date
         /// </summary>
         /// <param name="table">table element of the document</param>
-        private void FillSecondRow(XElement secondRow)
+        private void FillSecondRow(Invoice invoice, XElement secondRow)
         {
-            var firstCell = secondRow.Elements().First();
-            firstCell.Elements()
-                .First()
-                .SetValue("Invoice date:");
+            secondRow.Add(InitCell("Invoice date:"));
 
-            secondRow.Elements().ElementAt(1).Remove();
-            secondRow.Add(InitCell(Invoice.InvoiceDate.Date.ToString("dd/MM/yyyy")));
+            secondRow.Add(InitCell(invoice.InvoiceDate.Date.ToString("dd/MM/yyyy")));
             secondRow.Add(InitCell(""));
 
             secondRow.Add(InitCell("Type:"));
-            secondRow.Add(InitCell(Invoice.Type.ToString()));
+            secondRow.Add(InitCell(invoice.Type.ToString()));
         }
 
 
@@ -94,12 +151,12 @@ namespace AccountingODS.Serialization
         /// Fills the third row of the table
         /// </summary>
         /// <param name="thirdRow">Third row element</param>
-        private void FillThirdRow(XElement thirdRow)
+        private void FillThirdRow(Invoice invoice, XElement thirdRow)
         {
             thirdRow.Add(InitCell("Payment due by:"));
-            thirdRow.Add(InitCell(Invoice.MaturityDate.Date.ToString("dd/MM/yyyy")));
+            thirdRow.Add(InitCell(invoice.MaturityDate.Date.ToString("dd/MM/yyyy")));
 
-            decimal sum = Invoice.InvoicedItems.Sum(item => item.Cost);
+            decimal sum = invoice.InvoicedItems.Sum(item => item.Cost);
             thirdRow.Add(InitCell(""));
             thirdRow.Add(InitCell("Sum:"));
             thirdRow.Add(InitCell(sum.ToString()));
@@ -138,19 +195,19 @@ namespace AccountingODS.Serialization
         /// <param name="fifthRow">Fifth row</param>
         /// <param name="sixthRow">Sixth row</param>
         /// <param name="seventhRow">Seventh row</param>
-        private void FillInfoOfInvolvedPeople(XElement fifthRow, XElement sixthRow, XElement seventhRow)
+        private void FillInfoOfInvolvedPeople(Invoice invoice, XElement fifthRow, XElement sixthRow, XElement seventhRow)
         {
-            fifthRow.Add(InitCell(Invoice.Creditor.FullName));
+            fifthRow.Add(InitCell(invoice.Creditor.FullName));
             AddEmptyCells(fifthRow);
-            fifthRow.Add(InitCell(Invoice.Debtor.FullName));
+            fifthRow.Add(InitCell(invoice.Debtor.FullName));
 
-            sixthRow.Add(InitCell(Invoice.Creditor.Adress));
+            sixthRow.Add(InitCell(invoice.Creditor.Adress));
             AddEmptyCells(sixthRow);
-            sixthRow.Add(InitCell(Invoice.Debtor.Adress));
+            sixthRow.Add(InitCell(invoice.Debtor.Adress));
 
-            seventhRow.Add(InitCell(Invoice.Creditor.ZIPCode));
+            seventhRow.Add(InitCell(invoice.Creditor.ZIPCode));
             AddEmptyCells(seventhRow);
-            seventhRow.Add(InitCell(Invoice.Debtor.ZIPCode));
+            seventhRow.Add(InitCell(invoice.Debtor.ZIPCode));
         }
 
 
@@ -158,27 +215,17 @@ namespace AccountingODS.Serialization
         /// Fills first row of the XML invoice
         /// </summary>
         /// <param name="table">Table Element</param>
-        private void FillInvoiceHeader(XElement firstRow)
+        private void FillInvoiceHeader(Invoice invoice, XElement firstRow)
         {
-            var test = firstRow.Elements();
-
-            var firstCellText = firstRow.Elements()
-                                .Elements()
-                                .First();
-            firstCellText.Value = "Invoice";
-
-            firstRow.Elements()
-                .ToList()
-                .ElementAt(1)
-                .Elements()
-                .First().Value = Invoice.InvoiceNumber;
-
+            firstRow.Add(InitCell("Invoice"));
+            firstRow.Add(InitCell(invoice.InvoiceNumber));
         }
 
 
         private void PrepareTable(XElement table)
         {
-            for (int j = 0; j < 5; j++)
+            RowCount = 1;
+            for (int j = 1; j < 10; j++)
             {
                 AddRow(table);
             }
@@ -242,17 +289,16 @@ namespace AccountingODS.Serialization
         /// Projects invoice details to the XML document
         /// </summary
         /// <param name="table">Table element</param>
-        private void FillInvoicedGoodsTable(XElement table)
+        private void FillInvoicedGoodsTable(Invoice invoice, XElement table)
         {
             AddRow(table);
-            var result = (from item in Invoice.InvoicedItems
+            var result = (from item in invoice.InvoicedItems
                           group item by new { item.Name, item.Cost } into g
                           select new { g.Key.Name, Price = g.Key.Cost, Quantity = g.ToList().Count() })
                          .ToList();
 
             AddRow(table);
-            AddRow(table);
-            var tenthRow = table.Elements().ToList().ElementAt(11);
+            var tenthRow = table.Elements().ToList().ElementAt(10);
 
             tenthRow.Add(InitCell("Quantity"));
             tenthRow.Add(InitCell("Product name"));
@@ -262,7 +308,7 @@ namespace AccountingODS.Serialization
             for (int i = 0; i < result.Count; i++)
             {
                 AddRow(table);
-                var currentRow = table.Elements().ToList().ElementAt(i + 12);
+                var currentRow = table.Elements().ToList().ElementAt(i + 11);
                 currentRow.Add(InitCell(result.ElementAt(i).Quantity.ToString()));
                 currentRow.Add(InitCell(result.ElementAt(i).Name));
                 currentRow.Add(InitCell(result.ElementAt(i).Price.ToString()));
@@ -270,7 +316,5 @@ namespace AccountingODS.Serialization
                 currentRow.Add(InitCell(subTotalSum.ToString()));
             }
         }
-
-
     }
 }

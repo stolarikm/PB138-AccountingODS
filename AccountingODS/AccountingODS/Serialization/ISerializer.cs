@@ -10,7 +10,7 @@ namespace AccountingODS.Serialization
     {
 
         /// <summary>
-        /// Serializes the invoice to the XML format
+        /// Serializes the list of invoices to the XML format
         /// </summary>
         void Serialize();
 
