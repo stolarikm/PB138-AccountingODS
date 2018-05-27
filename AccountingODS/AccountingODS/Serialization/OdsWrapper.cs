@@ -58,6 +58,7 @@ namespace AccountingODS
 
             XmlDocument contentXml = new XmlDocument();
             contentXml.Load(contentStream);
+			zipFile.Dispose();
 
             return contentXml;
         }

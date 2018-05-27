@@ -45,10 +45,11 @@ namespace AccountingODS.Serialization
             
             for (int i = 0; i < Invoices.Count; i++)
             {
-                SerializeInvoice(Invoices.ElementAt(i), tables.ElementAt(i));
+				SerializeInvoice(Invoices.ElementAt(i), tables.ElementAt(i));
             }
             doc.Save(Paths.InputFolderPath + "content.xml");
-            wrapper.InsertXmlToODS(Paths.InputFolderPath, Paths.OutputFolderPath + "result.ods");
+			wrapper.InsertXmlToODS(Paths.InputFolderPath, System.IO.Path.Combine(Paths.OutputFolderPath, "result.ods"));
+			TableCount = 3;
         }
 
 		public IList<Invoice> DeSerialize(string filename)
