@@ -10,18 +10,20 @@ using AccountingODS.Serialization;
 public partial class MainWindow : Window
 {
 	private NodeView lastNodeFocused;
-	private List<Invoice> creditInvoices;
-	private List<Invoice> debtInvoices;
-	private Serializer serializer;
+	private List<Invoice> creditInvoices = new List<Invoice>();
+	private List<Invoice> debtInvoices = new List<Invoice>();
+	private Serializer serializer = new Serializer();
 
 	public MainWindow() : base(WindowType.Toplevel)
     {
 		Build();
 
-		//TODO: get invoices from ods
-		serializer = new Serializer();
-        creditInvoices = serializer.DeSerialize(Paths.InputFolderPath + "content.xml").Where(c => c.Type == InvoiceType.CREDIT).ToList();
-        debtInvoices = serializer.DeSerialize(Paths.InputFolderPath + "content.xml").Where(c => c.Type == InvoiceType.DEBT).ToList();
+        if (System.IO.File.Exists(System.IO.Path.Combine(Paths.OutputFolderPath, "result.ods"))) {
+			var wrapper = new OdsWrapper();
+			wrapper.ExctractXmlFromODS(System.IO.Path.Combine(Paths.OutputFolderPath, "result.ods"), System.IO.Path.Combine(Paths.InputFolderPath));
+			creditInvoices = serializer.DeSerialize(Paths.InputFolderPath + "content.xml").Where(c => c.Type == InvoiceType.CREDIT).ToList();
+			debtInvoices = serializer.DeSerialize(Paths.InputFolderPath + "content.xml").Where(c => c.Type == InvoiceType.DEBT).ToList();
+        }
 
 		populateNodeview(nodeviewCredit, creditInvoices);
 		populateNodeview(nodeviewDebt, debtInvoices);
