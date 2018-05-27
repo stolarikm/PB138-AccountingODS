@@ -14,6 +14,7 @@ public partial class MainWindow : Window
 	private List<Invoice> debtInvoices = new List<Invoice>();
 	private Serializer serializer = new Serializer();
 
+
 	public MainWindow() : base(WindowType.Toplevel)
     {
 		Build();

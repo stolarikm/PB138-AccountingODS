@@ -64,7 +64,7 @@ namespace AccountingODS.Serialization
                         .Where(c => c.FirstAttribute.ToString().Contains("Sheet"))
                         .ToList();
 
-            var pattern = new Regex(@"Invoice (?<number>\d*) Invoice date: (?<date>\d\d/\d\d/\d{4}) Type: (?<type>\w*) Payment due by: (?<date2>\d\d/\d\d/\d{4}) Sum: (?<price>\d*\.?\d*) Creditor Debtor Creditor name: (?<cn>\w.*) Debtor name: (?<dn>\w.*) Creditor address: (?<ca>\w.*) Debtor address: (?<da>\w.*) Creditor zip: (?<cz>\w*) Debtor zip: (?<dz>\w*)");
+			var pattern = new Regex(@"Invoice (?<number>\d*)\s?Invoice date: (?<date>\d\d/\d\d/\d{4}) Type: (?<type>\w*) Payment due by: (?<date2>\d\d/\d\d/\d{4}) Sum: (?<price>\d*\.?\d*) Creditor Debtor Creditor name: (?<cn>[\w\s]*) Debtor name: (?<dn>[\w\s]*) Creditor address: (?<ca>[\w\s,]*) Debtor address: (?<da>[\w\s,]*) Creditor zip: (?<cz>\w*) Debtor zip: (?<dz>\w*)");
             var pattern2 = new Regex(@"name: (?<name>\w*) cost: (?<cost>\d*\.?\d*)");
             foreach (var sheet in sheets)
             {
